@@ -1,9 +1,9 @@
 import "./App.css";
-import TodoList from "./components/TodoList";
+import TodoList from "./TodoList";
 import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import { v4 } from "uuid"; //unique uuid
-import React, { useState} from "react"; // first, we've imported useEffect from react
+import React, {useCallback, useState} from "react"; // first, we've imported useEffect from react
 
 function App() {
   // Lưu các item 1 dưới dạng mảng
@@ -11,10 +11,10 @@ function App() {
   // Text input trong text field
   const [textInput, setTextInput] = useState("");
 
-  const onTextInputChange = (e) => {
+  const onTextInputChange = useCallback((e) => {
     // e.target.value : noi dung nguoi dung nhap trong the input
     setTextInput(e.target.value)
-  };
+  },[]);
 
   
   const onAddTextButtonClick = (e) => {
