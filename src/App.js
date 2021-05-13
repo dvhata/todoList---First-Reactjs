@@ -1,5 +1,5 @@
 import "./App.css";
-import TodoList from "./TodoList";
+import TodoList from "/components/TodoList";
 import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import { v4 } from "uuid"; //unique uuid
