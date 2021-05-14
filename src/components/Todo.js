@@ -1,17 +1,46 @@
-import Button from '@atlaskit/button'
-import React from 'react';
-import styled from 'styled-components';
+import Button from "@atlaskit/button";
+import React from "react";
+import styled, { css } from "styled-components";
+import CheckIcon from "@atlaskit/icon/glyph/check";
 
 const ButtonStyled = styled(Button)`
-    margin-top: 5px;
-    text-align: left;
+  margin-top: 5px;
+  text-align: left;
+
+  ${(p) =>
+    p.isCompleted &&
+    css`
+      text-decoration: line-through;
+    `}
+
+  &:hover {
+    .check-icon {
+      display: inline-block;
+    }
+  }
+  .check-icon {
+    display: none;
+  }
+  &:hover {
+    background-color: yellow;
+    border-radius: 3px;
+  }
 `;
 
-
-const Todo = ({todo}) => {
-    return (
-            <ButtonStyled shouldFitContainer>{todo.name}</ButtonStyled>
-    );
-}
+const Todo = ({ todo, onCheckButtonClick }) => {
+  return (
+    <ButtonStyled
+      isCompleted={todo.isCompleted}
+      shouldFitContainer
+      iconAfter={
+        <span className="check-icon" onClick={() => onCheckButtonClick(todo.id)}>
+          <CheckIcon primaryColor="green" />
+        </span>
+      }
+    >
+      {todo.name}{" "}
+    </ButtonStyled>
+  );
+};
 
 export default Todo;

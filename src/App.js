@@ -1,9 +1,9 @@
 import "./App.css";
-import TodoList from "/components/TodoList";
+import TodoList from "./components/TodoList";
 import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import { v4 } from "uuid"; //unique uuid
-import React, {useCallback, useState} from "react"; // first, we've imported useEffect from react
+import React, { useCallback, useState } from "react"; // first, we've imported useEffect from react
 
 function App() {
   // Lưu các item 1 dưới dạng mảng
@@ -13,14 +13,30 @@ function App() {
 
   const onTextInputChange = useCallback((e) => {
     // e.target.value : noi dung nguoi dung nhap trong the input
-    setTextInput(e.target.value)
-  },[]);
+    setTextInput(e.target.value);
+  }, []);
+  // Khong cap nhat lai ham
 
-  
-  const onAddTextButtonClick = (e) => {
-    // them text input vao danh sach todoList (ben tren)
-    setTodoList([...todoList,{id:v4,name: textInput, isCompleted: false}]);
-  };
+  const onAddTextButtonClick = useCallback(
+    (e) => {
+      // them text input vao danh sach todoList (ben tren)
+      setTodoList([
+        { id: v4, name: textInput, isCompleted: false },
+        ...todoList,
+      ]);
+      setTextInput('')
+    },
+    [textInput, todoList]
+  );
+  // Function chay lai (tức là mỗi lần click button) va cap nhat text input, todoList
+
+  const onCheckButtonClick = useCallback((id) => {
+    setTodoList((prevState) =>
+      prevState.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: true } : todo
+      )
+    );
+  },[]);
 
   return (
     <>
@@ -29,16 +45,20 @@ function App() {
         name="add-todo"
         placeholder="Thêm việc cần làm ..."
         elemAfterInput={
-          <Button isDisabled={!textInput} appearance="primary" onClick={onAddTextButtonClick} >
+          <Button
+            isDisabled={!textInput}
+            appearance="primary"
+            onClick={onAddTextButtonClick}
+          >
             Thêm
           </Button>
         }
-        css={{padding: '2px 4px 2px'}}
-         // tren phai duoi
-        value = {textInput}
-        onChange = {onTextInputChange}
+        css={{ padding: "2px 4px 2px" }}
+        // tren phai duoi
+        value={textInput}
+        onChange={onTextInputChange}
       ></Textfield>
-      <TodoList todoList={todoList} /> {/* todoList la props */}
+      <TodoList todoList={todoList} onCheckButtonClick={onCheckButtonClick} /> {/* todoList la props */}
     </>
   );
 }
