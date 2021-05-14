@@ -7,15 +7,18 @@ const ButtonStyled = styled(Button)`
   margin-top: 5px;
   text-align: left;
 
-  ${(p) =>
-    p.isCompleted &&
-    css`
-      text-decoration: line-through;
-    `}
-
+  &,&:hover {
+    ${(p) =>
+        p.isCompleted &&
+        css`
+          text-decoration: line-through;
+        `}    
+  }
+ 
   &:hover {
     .check-icon {
       display: inline-block;
+      background-color:red;
     }
   }
   .check-icon {
@@ -33,6 +36,7 @@ const Todo = ({ todo, onCheckButtonClick }) => {
       isCompleted={todo.isCompleted}
       shouldFitContainer
       iconAfter={
+        !todo.isCompleted && 
         <span className="check-icon" onClick={() => onCheckButtonClick(todo.id)}>
           <CheckIcon primaryColor="green" />
         </span>

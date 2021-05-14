@@ -40,7 +40,10 @@ function App() {
 
   return (
     <>
-      <h3> Danh sách cần làm </h3>
+      <h2>
+         Todo List
+         
+      </h2>
       <Textfield
         name="add-todo"
         placeholder="Thêm việc cần làm ..."
